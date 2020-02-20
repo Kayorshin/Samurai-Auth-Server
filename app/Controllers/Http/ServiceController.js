@@ -1,43 +1,42 @@
-"use strict";
+'use strict'
 
-const Service = use("App/Models/Service");
-const UserService = use("App/Models/UserService");
-const Database = use("Database");
+const Service = use('App/Models/Service')
+const UserService = use('App/Models/UserService')
 
 class ServiceController {
-  async index({ auth }) {
+  async index ({ auth }) {
     const services = await UserService.query()
-      .with("user")
-      .with("services")
-      .where("user_id", auth.user.id)
-      .fetch();
-    return services;
+      .with('user')
+      .with('services')
+      .where('user_id', auth.user.id)
+      .fetch()
+    return services
   }
 
-  async store({ request }) {
-    const data = request.only(["name"]);
+  async store ({ request }) {
+    const data = request.only(['name'])
 
-    const service = await Service.create(data);
+    const service = await Service.create(data)
 
-    return service;
+    return service
   }
 
-  async show({ response, params, auth }) {
+  async show ({ response, params, auth }) {
     const service = await UserService.query()
-      .with("user")
-      .with("services")
-      .where("user_id", auth.user.id)
-      .where("service_id", params.id)
-      .fetch();
+      .with('user')
+      .with('services')
+      .where('user_id', auth.user.id)
+      .where('service_id', params.id)
+      .fetch()
 
     if (service.length === 0) {
       return response.status(401).send({
-        message: "Você não possui autorização para acessar este serviço"
-      });
+        message: 'Você não possui autorização para acessar este serviço'
+      })
     }
 
-    return service;
+    return service
   }
 }
 
-module.exports = ServiceController;
+module.exports = ServiceController
