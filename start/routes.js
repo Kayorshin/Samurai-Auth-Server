@@ -23,6 +23,7 @@ Route.post('users', 'UserController.store').validator('User')
 Route.post('sessions', 'SessionController.store').validator('Session')
 
 Route.group(() => {
+  Route.get('users', 'UserController.index')
   Route.get('services', 'ServiceController.index')
   Route.get('services/:id', 'ServiceController.show')
   Route.post('services', 'ServiceController.store').validator('Service')
